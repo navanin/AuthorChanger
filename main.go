@@ -38,15 +38,16 @@ func unzipFiles(fileName string){
 func changeAuthor (authorName string, xmlFile string) string {
 
 	var lastModifiedBy = fmt.Sprint("<cp:lastModifiedBy>" + authorName, "</cp:lastModifiedBy>")
-	var creator = fmt.Sprint("<dc:creator>" + authorName + "</dc:creator><cp:keywords>https://github.com/ragevna/AuthorChanger</cp:keywords>")
-
+	var creator = fmt.Sprint("<dc:creator>" + authorName + "</dc:creator>")
+	var sign = fmt.Sprint("</cp:coreProperties>\n<!-- AuthorChanged - https://github.com/ragevna/AuthorChanger -->")
 	creatorCng := regexp.MustCompile("<dc:creator>..*</dc:creator><cp:keywords></cp:keywords>")
 	out := creatorCng.ReplaceAllString(xmlFile, creator)
 	modifyCng := regexp.MustCompile("<cp:lastModifiedBy>..*</cp:lastModifiedBy>")
 	out1 := modifyCng.ReplaceAllString(out, lastModifiedBy)
-
-	print(out1)
-	return out1
+	addSign := regexp.MustCompile("</cp:coreProperties>")
+	out2 := addSign.ReplaceAllString(out1, sign)
+	print(out2)
+	return out2
 }
 
 func zipFiles(source, target string) error {
