@@ -40,7 +40,8 @@ func changeAuthor (authorName string, xmlFile string) string {
 	var lastModifiedBy = fmt.Sprint("<cp:lastModifiedBy>" + authorName, "</cp:lastModifiedBy>")
 	var creator = fmt.Sprint("<dc:creator>" + authorName + "</dc:creator>")
 	var sign = fmt.Sprint("</cp:coreProperties>\n<!-- AuthorChanged - https://github.com/ragevna/AuthorChanger -->")
-	creatorCng := regexp.MustCompile("<dc:creator>..*</dc:creator><cp:keywords></cp:keywords>")
+	creatorCng := regexp.MustCompile("<dc:creator>..*</dc:creator><cp" +
+		":keywords></cp:keywords>")
 	out := creatorCng.ReplaceAllString(xmlFile, creator)
 	modifyCng := regexp.MustCompile("<cp:lastModifiedBy>..*</cp:lastModifiedBy>")
 	out1 := modifyCng.ReplaceAllString(out, lastModifiedBy)
@@ -111,6 +112,7 @@ func main()  {
 	var authorName string = ""
 	var fileName = os.Args[1]
 	var fileNameOnly = strings.Split(fileName, ".")
+	var AuthorChanged = fmt.Sprint("AuthorChanged" + fileNameOnly[1])
 	var zipFile = fmt.Sprint(fileNameOnly[0] + ".zip")
 	var xmlFile = "zipOutput/docProps/core.xml"
 	fmt.Printf("Привет! В файле " + fileName + " имя автора на: ")
@@ -132,5 +134,5 @@ func main()  {
 
 	defer os.RemoveAll("./zipOutput")
 	zipFiles("zipOutput", zipFile)
-	os.Rename(zipFile, "AuthorChanged.docx" )
+	os.Rename(zipFile, AuthorChanged )
 }
