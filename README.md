@@ -1,7 +1,7 @@
 # AuthorChanger
 This program helps you to **change** Microsoft Office 2013-2019 document **author**.
 
-Works with MS Word, MS Excel, MS PowerPoint.
+Tested on MS Word, MS Excel, MS PowerPoint.
 
 ## Usage
 
